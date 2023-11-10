@@ -102,6 +102,9 @@ class OIDCAuthenticationBackend(ConfigMixin, auth.OIDCAuthenticationBackend):
         return user
 
     def update_user(self, user, claims):
+        # FIXME: handle claiml["email"] is already taken by another account
+        # - we could send a email to both adresses ?
+        # - we could skip email update and add a page before redirecting the user ?
         old_user_data = model_to_dict(user)
         user.email = claims["email"]
         user.first_name = claims["given_name"]
